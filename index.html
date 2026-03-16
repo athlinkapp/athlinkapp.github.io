@@ -25,11 +25,51 @@
       --border-s:  rgba(255,255,255,0.04);
       --primary:   #6366F1;
       --primary-d: #4F46E5;
+      --primary-g: rgba(99,102,241,0.15);
+      --primary-border: rgba(99,102,241,0.28);
+      --accent-2: #a78bfa;
       --text:      #F1F5F9;
       --sub:       #94A3B8;
       --muted:     #64748B;
       --gold:      #F59E0B;
       --radius:    22px;
+      --nav-bg: rgba(2,6,23,0.75);
+      --btn-shadow: rgba(99,102,241,0.4);
+      --cta-glow: rgba(99,102,241,0.45);
+      --hover-bg: rgba(255,255,255,0.04);
+      --wave-bg: #020617;
+      --wave-1: #6366F1;
+      --wave-2: #818cf8;
+      --wave-3: #4F46E5;
+      --wave-4: #a78bfa;
+      --wave-5: #38bdf8;
+    }
+
+    :root[data-theme="morning"] {
+      --bg:        #F6F3EE;
+      --card:      #FFFFFF;
+      --card-alt:  #FFF1E6;
+      --border:    rgba(30,41,59,0.10);
+      --border-s:  rgba(30,41,59,0.06);
+      --primary:   #F97316;
+      --primary-d: #EA580C;
+      --primary-g: rgba(249,115,22,0.18);
+      --primary-border: rgba(249,115,22,0.32);
+      --accent-2: #FDBA74;
+      --text:      #1F2937;
+      --sub:       #475569;
+      --muted:     #64748B;
+      --gold:      #D97706;
+      --nav-bg: rgba(255,244,233,0.85);
+      --btn-shadow: rgba(249,115,22,0.38);
+      --cta-glow: rgba(249,115,22,0.35);
+      --hover-bg: rgba(249,115,22,0.08);
+      --wave-bg: #F6F3EE;
+      --wave-1: #F59E0B;
+      --wave-2: #FDBA74;
+      --wave-3: #FB7185;
+      --wave-4: #F97316;
+      --wave-5: #FBBF24;
     }
 
     html, body {
@@ -71,7 +111,7 @@
       border-bottom: 1px solid var(--border);
       position: sticky;
       top: 0;
-      background: rgba(2,6,23,0.75);
+      background: var(--nav-bg);
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
       z-index: 100;
@@ -103,9 +143,44 @@
       border-radius: 12px;
       text-decoration: none;
       transition: opacity 0.2s, transform 0.1s;
-      box-shadow: 0 4px 14px rgba(99,102,241,0.4);
+      box-shadow: 0 4px 14px var(--btn-shadow);
     }
     .nav-cta:hover { opacity: 0.85; transform: translateY(-1px); }
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .theme-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px;
+      border-radius: 999px;
+      background: var(--card);
+      border: 1px solid var(--border);
+    }
+    .theme-btn {
+      border: none;
+      background: transparent;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 800;
+      padding: 6px 10px;
+      border-radius: 999px;
+      cursor: pointer;
+      letter-spacing: 0.4px;
+      text-transform: uppercase;
+      transition: background 0.15s, color 0.15s, transform 0.1s;
+      font-family: inherit;
+    }
+    .theme-btn:hover { color: var(--text); transform: translateY(-1px); }
+    .theme-btn.active {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-d) 100%);
+      color: #fff;
+      box-shadow: 0 4px 12px var(--btn-shadow);
+    }
+    .theme-btn.auto { color: var(--sub); }
 
     /* ─── HERO ────────────────────────────────────────── */
     .hero {
@@ -118,9 +193,9 @@
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      background: rgba(99,102,241,0.12);
-      border: 1px solid rgba(99,102,241,0.28);
-      color: #818cf8;
+      background: var(--primary-g);
+      border: 1px solid var(--primary-border);
+      color: var(--primary);
       font-size: 12px;
       font-weight: 700;
       letter-spacing: 1px;
@@ -137,7 +212,7 @@
       letter-spacing: -1.5px;
     }
     .hero h1 .accent {
-      background: linear-gradient(135deg, var(--primary) 0%, #a78bfa 100%);
+      background: linear-gradient(135deg, var(--primary) 0%, var(--accent-2) 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
@@ -164,7 +239,7 @@
       border-radius: 16px;
       text-decoration: none;
       transition: opacity 0.2s, transform 0.15s;
-      box-shadow: 0 8px 28px rgba(99,102,241,0.45);
+      box-shadow: 0 8px 28px var(--cta-glow);
       font-family: inherit;
       letter-spacing: -0.2px;
     }
@@ -182,6 +257,7 @@
       font-family: inherit;
     }
     .btn-secondary:hover { border-color: var(--muted); background: rgba(255,255,255,0.04); }
+    :root[data-theme="morning"] .btn-secondary:hover { background: var(--hover-bg); }
 
     /* ─── STATS BAR ───────────────────────────────────── */
     .stats-bar {
@@ -410,9 +486,12 @@
 
     @media (max-width: 640px) {
       .stats-wrap { padding: 0 16px 60px; }
-      nav { padding: 12px 16px; }
+      nav { padding: 12px 16px; flex-wrap: wrap; gap: 10px; }
       nav .nav-logo span { font-size: 15px; }
       nav .nav-cta { padding: 9px 16px; font-size: 13px; }
+      .nav-actions { width: 100%; justify-content: space-between; }
+      .theme-toggle { padding: 3px; }
+      .theme-btn { padding: 5px 8px; font-size: 10px; }
 
       .hero { padding: 64px 18px 48px; }
       .hero h1 { font-size: 36px; letter-spacing: -1px; }
@@ -441,6 +520,61 @@
   </style>
 </head>
 <body>
+<script>
+  (function () {
+    const root = document.documentElement;
+    const storageKey = "athlinkTheme";
+    const params = new URLSearchParams(window.location.search);
+    const paramTheme = params.get("theme");
+    let override = (paramTheme === "morning" || paramTheme === "night")
+      ? paramTheme
+      : localStorage.getItem(storageKey);
+
+    function themeForNow() {
+      const hour = new Date().getHours();
+      return hour >= 6 && hour < 18 ? "morning" : "night";
+    }
+    function applyTheme() {
+      const next = override || themeForNow();
+      root.setAttribute("data-theme", next);
+      if (typeof window.__refreshWaves === "function") window.__refreshWaves();
+      updateToggle(next);
+    }
+    function setOverride(next) {
+      override = next;
+      localStorage.setItem(storageKey, next);
+      applyTheme();
+    }
+    function clearOverride() {
+      override = null;
+      localStorage.removeItem(storageKey);
+      applyTheme();
+    }
+    function updateToggle(active) {
+      const morningBtn = document.getElementById("theme-morning");
+      const nightBtn = document.getElementById("theme-night");
+      const autoBtn = document.getElementById("theme-auto");
+      if (!morningBtn || !nightBtn || !autoBtn) return;
+      morningBtn.classList.toggle("active", active === "morning");
+      nightBtn.classList.toggle("active", active === "night");
+      autoBtn.classList.toggle("active", !override);
+    }
+    applyTheme();
+    setInterval(applyTheme, 60 * 60 * 1000);
+
+    document.addEventListener("DOMContentLoaded", () => {
+      applyTheme();
+    });
+
+    document.addEventListener("click", (event) => {
+      const target = event.target;
+      if (!(target instanceof HTMLElement)) return;
+      if (target.id === "theme-morning") setOverride("morning");
+      if (target.id === "theme-night") setOverride("night");
+      if (target.id === "theme-auto") clearOverride();
+    });
+  })();
+</script>
 
 <canvas id="wave-canvas"></canvas>
 <div class="bg-fade"></div>
@@ -450,7 +584,14 @@
     <img src="logo.png" alt="Athlink" onerror="this.style.display='none'" />
     <span>Athlink</span>
   </a>
-  <a class="nav-cta" href="https://apps.apple.com/app/athlink/id000000000">Download App</a>
+  <div class="nav-actions">
+    <div class="theme-toggle" role="group" aria-label="Theme">
+      <button class="theme-btn" id="theme-morning" type="button">Morning</button>
+      <button class="theme-btn" id="theme-night" type="button">Night</button>
+      <button class="theme-btn auto" id="theme-auto" type="button">Auto</button>
+    </div>
+    <a class="nav-cta" href="https://apps.apple.com/app/athlink/id000000000">Download App</a>
+  </div>
 </nav>
 
 <main>
@@ -603,7 +744,8 @@
   const ctx    = canvas.getContext("2d");
   const noise  = createNoise3D();
 
-  const COLORS = ["#6366F1", "#818cf8", "#4F46E5", "#a78bfa", "#38bdf8"];
+  let COLORS = [];
+  let bgColor = "#020617";
   const SPEED  = 0.0012;
   const BLUR   = 18;
   let w, h, nt = 0;
@@ -616,8 +758,20 @@
     if (!isSafari) ctx.filter = `blur(${BLUR}px)`;
   }
 
+  function readWavePalette() {
+    const styles = getComputedStyle(document.documentElement);
+    bgColor = styles.getPropertyValue("--wave-bg").trim() || "#020617";
+    COLORS = [
+      styles.getPropertyValue("--wave-1").trim(),
+      styles.getPropertyValue("--wave-2").trim(),
+      styles.getPropertyValue("--wave-3").trim(),
+      styles.getPropertyValue("--wave-4").trim(),
+      styles.getPropertyValue("--wave-5").trim(),
+    ].filter(Boolean);
+  }
+
   function draw() {
-    ctx.fillStyle = "#020617";
+    ctx.fillStyle = bgColor;
     ctx.globalAlpha = 1;
     ctx.fillRect(0, 0, w, h);
     nt += SPEED;
@@ -638,8 +792,11 @@
 
   resize();
   if (isSafari) canvas.style.filter = `blur(${BLUR}px)`;
+  readWavePalette();
   draw();
   window.addEventListener("resize", resize);
+  window.addEventListener("visibilitychange", readWavePalette);
+  window.__refreshWaves = readWavePalette;
 </script>
 
 </body>

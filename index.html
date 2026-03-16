@@ -43,6 +43,7 @@
       --wave-3: #4F46E5;
       --wave-4: #a78bfa;
       --wave-5: #38bdf8;
+      --grid: rgba(99,102,241,0.18);
     }
 
     :root[data-theme="morning"] {
@@ -70,6 +71,7 @@
       --wave-3: #FF9A3C;
       --wave-4: #2563EB;
       --wave-5: #93C5FD;
+      --grid: rgba(59,130,246,0.18);
     }
 
     html, body {
@@ -101,6 +103,19 @@
       z-index: 1;
       pointer-events: none;
       background: radial-gradient(ellipse 120% 45% at 50% 0%, transparent 30%, var(--bg) 80%);
+    }
+    .grid-layer {
+      position: fixed;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+      background-image:
+        linear-gradient(to right, var(--grid) 1px, transparent 1px),
+        linear-gradient(to bottom, var(--grid) 1px, transparent 1px);
+      background-size: 24px 24px;
+      opacity: 0.55;
+      -webkit-mask-image: radial-gradient(ellipse 120% 60% at 50% 0%, black 40%, transparent 78%);
+      mask-image: radial-gradient(ellipse 120% 60% at 50% 0%, black 40%, transparent 78%);
     }
 
     /* ─── ALL CONTENT ABOVE CANVAS ───────────────────── */
@@ -582,6 +597,7 @@
 
 <canvas id="wave-canvas"></canvas>
 <div class="bg-fade"></div>
+<div class="grid-layer"></div>
 
 <nav>
   <a class="nav-logo" href="#">
